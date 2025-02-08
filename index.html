@@ -3,400 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vidyadhara - Library Management System</title>
+    <title>Vidyadhara - Library Management</title>
     <style>
-        /* Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f4;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Common Components */
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            margin: 5px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        /* Top Bar Styles */
-        .top-bar {
-            background: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .search-bar {
-            flex: 1;
-            margin: 0 20px;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-            z-index: 1;
-            border-radius: 4px;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        /* Subject Tabs */
-        .tabs {
-            display: flex;
-            justify-content: space-around;
-            background: white;
-            padding: 10px;
-            margin-top: 20px;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        .tab:hover {
-            background-color: #f0f0f0;
-        }
-
-        /* Forms */
-        .auth-form {
-            max-width: 400px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        /* Motto Section */
-        .motto {
-            text-align: center;
-            padding: 40px;
-            background: #e9ecef;
-        }
-
-        .motto h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .hidden {
-            display: none;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; background-color: #007bff; color: white; transition: 0.3s; }
+        .btn:hover { background-color: #0056b3; }
+        .hidden { display: none; }
+        .tabs { display: flex; background-color: #fff; border-radius: 8px; overflow: hidden; }
+        .tab { padding: 15px 25px; cursor: pointer; transition: 0.3s; }
+        .tab:hover { background-color: #f8f9fa; }
+        .tab.active { background-color: #007bff; color: white; }
+        @media (max-width: 768px) { .tabs { flex-wrap: wrap; } .search-bar { width: 90%; } }
     </style>
 </head>
 <body>
-    <!-- Initial Selection -->
     <div id="initialSelection" class="container">
-        <div class="auth-form">
+        <div class="auth-container">
             <h2>Welcome to Vidyadhara</h2>
             <button class="btn" onclick="showUserTypeSelection()">Reader</button>
             <button class="btn" onclick="showLibrarianInterface()">Librarian</button>
         </div>
     </div>
 
-    <!-- Reader Type Selection -->
-    <div id="readerTypeSelection" class="hidden container">
-        <div class="auth-form">
-            <h2>Select Reader Type</h2>
-            <button class="btn" onclick="showStudentInterface()">Student</button>
-            <button class="btn" onclick="showExpertInterface()">Expert</button>
-            <button class="btn" onclick="showOtherInterface()">Other</button>
-        </div>
-    </div>
-
-    <!-- Student Interface -->
-    <div id="studentInterface" class="hidden">
-        <!-- Motto Page -->
-        <div id="studentMotto" class="motto">
-            <h1>विद्या ददाति विनयम्</h1>
-            <h2>Knowledge gives humility</h2>
-            <button class="btn" onclick="showStudentAuth()">Continue</button>
-        </div>
-
-        <!-- Student Auth -->
-        <div id="studentAuth" class="hidden container">
-            <div class="auth-form">
-                <button class="btn" onclick="showLoginForm('student')">Login</button>
-                <button class="btn" onclick="showSignupForm('student')">Sign Up</button>
-            </div>
-        </div>
-
-        <!-- Student Signup Form -->
-        <div id="studentSignup" class="hidden container">
-            <div class="auth-form">
-                <input type="text" class="form-control" placeholder="Name">
-                <input type="tel" class="form-control" placeholder="Phone Number">
-                <button class="btn">Continue with Gmail</button>
-                <button class="btn" onclick="showStudentMain()">Create Profile</button>
-            </div>
-        </div>
-
-        <!-- Student Main Page -->
-        <div id="studentMain" class="hidden">
-            <div class="top-bar">
-                <!-- Settings -->
-                <div class="dropdown">
-                    <button class="btn">⚙️</button>
-                    <div class="dropdown-content">
-                        <a href="#">Language Preference</a>
-                        <a href="#">Notifications</a>
-                        <a href="#">Updates</a>
-                        <a href="#">About</a>
-                        <a href="#">Privacy</a>
-                    </div>
-                </div>
-
-                <!-- Search Bar -->
-                <input type="text" class="search-bar" placeholder="Search books, authors, editions...">
-
-                <!-- Profile -->
-                <div class="dropdown">
-                    <button class="btn">👤</button>
-                    <div class="dropdown-content">
-                        <a href="#">Search History</a>
-                        <a href="#">Saved Books</a>
-                        <a href="#">Collections</a>
-                        <a href="#">Manage Account</a>
-                        <a href="#">Help</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Subject Tabs -->
-            <div class="tabs">
-                <div class="tab">Engineering</div>
-                <div class="tab">Medicine</div>
-                <div class="tab">Law</div>
-                <div class="tab">Accountancy</div>
-                <div class="tab">Literature</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Expert Interface -->
-    <div id="expertInterface" class="hidden">
-        <!-- Motto Page -->
-        <div id="expertMotto" class="motto">
-            <h1>विद्या ददाति विनयम्</h1>
-            <h2>Knowledge gives humility</h2>
-            <button class="btn" onclick="showExpertAuth()">Continue</button>
-        </div>
-
-        <!-- Expert Auth -->
-        <div id="expertAuth" class="hidden container">
-            <div class="auth-form">
-                <button class="btn" onclick="showLoginForm('expert')">Login</button>
-                <button class="btn" onclick="showSignupForm('expert')">Sign Up</button>
-            </div>
-        </div>
-
-        <!-- Expert Signup Form -->
-        <div id="expertSignup" class="hidden container">
-            <div class="auth-form">
-                <input type="text" class="form-control" placeholder="Name">
-                <input type="tel" class="form-control" placeholder="Phone Number">
-                <button class="btn">Continue with Gmail</button>
-                <button class="btn" onclick="showExpertMain()">Create Profile</button>
-            </div>
-        </div>
-
-        <!-- Expert Main Page -->
-        <div id="expertMain" class="hidden">
-            <div class="top-bar">
-                <!-- Settings -->
-                <div class="dropdown">
-                    <button class="btn">⚙️</button>
-                    <div class="dropdown-content">
-                        <a href="#">Language Preference</a>
-                        <a href="#">Notifications</a>
-                        <a href="#">Updates</a>
-                        <a href="#">About</a>
-                        <a href="#">Privacy</a>
-                        <a href="#">Suggestions</a>
-                    </div>
-                </div>
-
-                <!-- Search Bar -->
-                <input type="text" class="search-bar" placeholder="Search books, authors, editions...">
-
-                <!-- Profile -->
-                <div class="dropdown">
-                    <button class="btn">👤</button>
-                    <div class="dropdown-content">
-                        <a href="#">Search History</a>
-                        <a href="#">Saved Books</a>
-                        <a href="#">Collections</a>
-                        <a href="#">Manage Account</a>
-                        <a href="#">Help</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Subject Tabs -->
-            <div class="tabs">
-                <div class="tab">Engineering</div>
-                <div class="tab">Medicine</div>
-                <div class="tab">Law</div>
-                <div class="tab">Accountancy</div>
-                <div class="tab">Literature</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Other Interface -->
-    <div id="otherInterface" class="hidden">
-        <!-- Similar structure to Student/Expert but with limited features -->
-        <!-- Motto Page -->
-        <div id="otherMotto" class="motto">
-            <h1>विद्या ददाति विनयम्</h1>
-            <h2>Knowledge gives humility</h2>
-            <button class="btn" onclick="showOtherAuth()">Continue</button>
-        </div>
-
-        <!-- Other Auth -->
-        <div id="otherAuth" class="hidden container">
-            <div class="auth-form">
-                <button class="btn" onclick="showLoginForm('other')">Login</button>
-                <button class="btn" onclick="showSignupForm('other')">Sign Up</button>
-            </div>
-        </div>
-
-        <!-- Other Main Page -->
-        <div id="otherMain" class="hidden">
-            <!-- Similar structure to Student/Expert but with limited features -->
-            <div class="top-bar">
-                <input type="text" class="search-bar" placeholder="Search books...">
-                <div class="dropdown">
-                    <button class="btn">👤</button>
-                    <div class="dropdown-content">
-                        <a href="#">Search History</a>
-                        <a href="#">Help</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tabs">
-                <div class="tab">Engineering</div>
-                <div class="tab">Medicine</div>
-                <div class="tab">Law</div>
-                <div class="tab">Accountancy</div>
-                <div class="tab">Literature</div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Navigation Functions
         function showUserTypeSelection() {
             document.getElementById('initialSelection').classList.add('hidden');
-            document.getElementById('readerTypeSelection').classList.remove('hidden');
+            localStorage.setItem('userType', 'reader');
         }
-
-        function showStudentInterface() {
-            document.getElementById('readerTypeSelection').classList.add('hidden');
-            document.getElementById('studentInterface').classList.remove('hidden');
+        function showLibrarianInterface() {
+            document.getElementById('initialSelection').classList.add('hidden');
+            localStorage.setItem('userType', 'librarian');
         }
-
-        function showExpertInterface() {
-            document.getElementById('readerTypeSelection').classList.add('hidden');
-            document.getElementById('expertInterface').classList.remove('hidden');
-        }
-
-        function showOtherInterface() {
-            document.getElementById('readerTypeSelection').classList.add('hidden');
-            document.getElementById('otherInterface').classList.remove('hidden');
-        }
-
-        // Auth Functions
-        function showStudentAuth() {
-            document.getElementById('studentMotto').classList.add('hidden');
-            document.getElementById('studentAuth').classList.remove('hidden');
-        }
-
-        function showExpertAuth() {
-            document.getElementById('expertMotto').classList.add('hidden');
-            document.getElementById('expertAuth').classList.remove('hidden');
-        }
-
-        function showOtherAuth() {
-            document.getElementById('otherMotto').classList.add('hidden');
-            document.getElementById('otherAuth').classList.remove('hidden');
-        }
-
-        function showSignupForm(type) {
-            document.getElementById(`${type}Auth`).classList.add('hidden');
-            document.getElementById(`${type}Signup`).classList.remove('hidden');
-        }
-
-        function showLoginForm(type) {
-            document.getElementById(`${type}Auth`).classList.add('hidden');
-            document.getElementById(`${type}Main`).classList.remove('hidden');
-        }
-
-        // Main Page Functions
-        function showStudentMain() {
-            document.getElementById('studentSignup').classList.add('hidden');
-            document.getElementById('studentMain').classList.remove('hidden');
-        }
-
-        function showExpertMain() {
-            document.getElementById('expertSignup').classList.add('hidden');
-            document.getElementById('expertMain').classList.remove('hidden');
-        }
-
-        function showOtherMain() {
-            document.getElementById('otherSignup').classList.add('hidden');
-            document.getElementById('otherMain').classList.remove('hidden');
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const userType = localStorage.getItem('userType');
+            if (userType === 'reader') showUserTypeSelection();
+            else if (userType === 'librarian') showLibrarianInterface();
+        });
     </script>
 </body>
 </html>
