@@ -6,159 +6,33 @@
     <title>Vidyadhara Library Management System</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+        /* Previous styles remain the same */
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .hidden {
+        /* Adding styles for nested tabs */
+        .nested-tabs {
             display: none;
-        }
-
-        /* User Type Selection Page */
-        .user-type-selection {
-            text-align: center;
-            padding: 50px 0;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .btn-primary {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .btn-secondary {
-            background-color: #2196F3;
-            color: white;
-        }
-
-        /* Motto Page */
-        .motto-page {
-            text-align: center;
-            padding: 50px 0;
-        }
-
-        .motto {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-
-        /* Auth Page */
-        .auth-page {
-            max-width: 400px;
-            margin: 0 auto;
             padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        /* Main Page */
-        .top-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .search-bar {
-            flex-grow: 1;
-            margin: 0 20px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .icon {
-            font-size: 20px;
-            cursor: pointer;
-            color: #333;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            z-index: 1;
-            border-radius: 5px;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
             background-color: #f1f1f1;
         }
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 20px;
-        }
-
-        .tab {
-            flex: 1;
-            min-width: 150px;
-            padding: 20px;
-            text-align: center;
-            background-color: #f8f9fa;
+        .nested-tab {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #fff;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            display: inline-block;
         }
 
-        .tab:hover {
+        .nested-tab:hover {
             background-color: #e9ecef;
         }
+
+        .active-tab {
+            background-color: #e9ecef;
+        }
+
+        /* Remaining previous styles stay the same */
     </style>
 </head>
 <body>
@@ -172,14 +46,14 @@
     <!-- Reader Type Selection Page -->
     <div id="readerTypePage" class="user-type-selection hidden">
         <h1>Select Reader Type</h1>
-        <button class="btn btn-primary" onclick="showMottoPage()">Student</button>
-        <button class="btn btn-secondary" onclick="showMottoPage()">Expert</button>
-        <button class="btn btn-secondary"onclick="showMottoPage()">Other</button>
+        <button class="btn btn-primary" onclick="showMottoPage('student')">Student</button>
+        <button class="btn btn-secondary" onclick="showMottoPage('expert')">Expert</button>
+        <button class="btn btn-secondary" onclick="showMottoPage('other')">Other</button>
     </div>
 
-    <!-- Motto Page -->
+    <!-- Motto Page (Dynamic for all user types) -->
     <div id="mottoPage" class="motto-page hidden">
-        <h1>Student's Page</h1>
+        <h1 id="userTypeTitle">User's Page</h1>
         <p class="motto">विद्या ददाति विनयम्</p>
         <p class="motto">Knowledge gives humility</p>
         <button class="btn btn-primary" onclick="showAuthPage()">Continue</button>
@@ -216,14 +90,14 @@
                 <input type="email" class="form-control" placeholder="Email" required>
             </div>
             <button type="submit" class="btn btn-primary">Sign Up</button>
+            <button type="button" class="btn btn-secondary" onclick="signupWithGoogle()">Continue with Google</button>
         </form>
     </div>
 
-    <!-- Main Page -->
-    <div id="mainPage" class="hidden">
-        <!-- Top Bar -->
+    <!-- Main Pages -->
+    <!-- Student Main Page -->
+    <div id="studentMainPage" class="hidden">
         <div class="top-bar">
-            <!-- Settings -->
             <div class="dropdown">
                 <i class="fas fa-cog icon"></i>
                 <div class="dropdown-content">
@@ -235,12 +109,10 @@
                 </div>
             </div>
 
-            <!-- Search Bar -->
             <div class="search-bar">
                 <input type="text" class="search-input" placeholder="Search books by title, author, year, or edition...">
             </div>
 
-            <!-- Profile -->
             <div class="dropdown">
                 <i class="fas fa-user icon"></i>
                 <div class="dropdown-content">
@@ -253,7 +125,6 @@
             </div>
         </div>
 
-        <!-- Tabs -->
         <div class="tabs">
             <div class="tab">
                 <i class="fas fa-cogs"></i>
@@ -278,15 +149,153 @@
         </div>
     </div>
 
+    <!-- Expert Main Page -->
+    <div id="expertMainPage" class="hidden">
+        <div class="top-bar">
+            <div class="dropdown">
+                <i class="fas fa-cog icon"></i>
+                <div class="dropdown-content">
+                    <a href="#">Language Preference</a>
+                    <a href="#">Notifications</a>
+                    <a href="#">Updates</a>
+                    <a href="#">About</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Suggestions</a>
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search books by title, author, year, or edition...">
+            </div>
+
+            <div class="dropdown">
+                <i class="fas fa-user icon"></i>
+                <div class="dropdown-content">
+                    <a href="#">Search History</a>
+                    <a href="#">Saved Books</a>
+                    <a href="#">Collections</a>
+                    <a href="#">Manage Account</a>
+                    <a href="#">Help</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab">
+                <i class="fas fa-cogs"></i>
+                <p>Engineering</p>
+            </div>
+            <div class="tab">
+                <i class="fas fa-heart"></i>
+                <p>Medicine</p>
+            </div>
+            <div class="tab">
+                <i class="fas fa-balance-scale"></i>
+                <p>Law</p>
+            </div>
+            <div class="tab">
+                <i class="fas fa-calculator"></i>
+                <p>Accountancy</p>
+            </div>
+            <div class="tab">
+                <i class="fas fa-book"></i>
+                <p>Literature</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Other Main Page -->
+    <div id="otherMainPage" class="hidden">
+        <div class="top-bar">
+            <div class="dropdown">
+                <i class="fas fa-cog icon"></i>
+                <div class="dropdown-content">
+                    <a href="#">Language Preference</a>
+                    <a href="#">Notifications</a>
+                    <a href="#">Updates</a>
+                    <a href="#">About</a>
+                    <a href="#">Privacy</a>
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search books by title, author, year, or edition...">
+            </div>
+
+            <div class="dropdown">
+                <i class="fas fa-user icon"></i>
+                <div class="dropdown-content">
+                    <a href="#">Search History</a>
+                    <a href="#">Saved Books</a>
+                    <a href="#">Collections</a>
+                    <a href="#">Manage Account</a>
+                    <a href="#">Help</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab" onclick="toggleNestedTabs('fiction')">
+                <i class="fas fa-book-reader"></i>
+                <p>Fiction</p>
+            </div>
+            <div class="tab" onclick="toggleNestedTabs('nonfiction')">
+                <i class="fas fa-glasses"></i>
+                <p>Non Fiction</p>
+            </div>
+            <div class="tab">
+                <i class="fas fa-paint-brush"></i>
+                <p>Graphic Novels</p>
+            </div>
+            <div class="tab">
+                <i class="fas fa-feather"></i>
+                <p>Poetry</p>
+            </div>
+            <div class="tab">
+                <i class="fas fa-theater-masks"></i>
+                <p>Playscripts</p>
+            </div>
+        </div>
+
+        <!-- Nested Tabs -->
+        <div id="fictionTabs" class="nested-tabs">
+            <div class="nested-tab">Romance</div>
+            <div class="nested-tab">Mystery</div>
+            <div class="nested-tab">Thriller</div>
+            <div class="nested-tab">Horror</div>
+            <div class="nested-tab">Historical Fantasy</div>
+            <div class="nested-tab">Science Fiction</div>
+            <div class="nested-tab">Dystopian</div>
+            <div class="nested-tab">Utopian</div>
+        </div>
+
+        <div id="nonfictionTabs" class="nested-tabs">
+            <div class="nested-tab">Biography</div>
+            <div class="nested-tab">Autobiography</div>
+            <div class="nested-tab">Memoir</div>
+            <div class="nested-tab">History</div>
+            <div class="nested-tab">Self Help</div>
+            <div class="nested-tab">Travel</div>
+            <div class="nested-tab">Cook Book</div>
+            <div class="nested-tab">Science</div>
+            <div class="nested-tab">Philosophy</div>
+        </div>
+    </div>
+
     <script>
+        let currentUserType = '';
+
         function showReaderTypePage() {
             document.getElementById('userTypePage').classList.add('hidden');
             document.getElementById('readerTypePage').classList.remove('hidden');
         }
 
-        function showMottoPage() {
+        function showMottoPage(userType) {
+            currentUserType = userType;
             document.getElementById('readerTypePage').classList.add('hidden');
             document.getElementById('mottoPage').classList.remove('hidden');
+            document.getElementById('userTypeTitle').textContent = 
+                userType.charAt(0).toUpperCase() + userType.slice(1) + "'s Page";
         }
 
         function showAuthPage() {
@@ -307,13 +316,42 @@
         function handleLogin(event) {
             event.preventDefault();
             document.getElementById('authPage').classList.add('hidden');
-            document.getElementById('mainPage').classList.remove('hidden');
+            showMainPage();
         }
 
         function handleSignup(event) {
             event.preventDefault();
             document.getElementById('authPage').classList.add('hidden');
-            document.getElementById('mainPage').classList.remove('hidden');
+            showMainPage();
+        }
+
+        function showMainPage() {
+            const mainPages = {
+                'student': 'studentMainPage',
+                'expert': 'expertMainPage',
+                'other': 'otherMainPage'
+            };
+            document.getElementById(mainPages[currentUserType]).classList.remove('hidden');
+        }
+
+        function signupWithGoogle() {
+            // Google sign-in implementation would go here
+            showMainPage();
+        }
+
+        function toggleNestedTabs(tabType) {
+            const fictionTabs = document.getElementById('fictionTabs');
+            const nonfictionTabs = document.getElementById('nonfictionTabs');
+            
+            if (tabType === 'fiction') {
+                fictionTabs.style.display = 
+                    fictionTabs.style.display === 'block' ? 'none' : 'block';
+                nonfictionTabs.style.display = 'none';
+            } else {
+                nonfictionTabs.style.display = 
+                    nonfictionTabs.style.display === 'block' ? 'none' : 'block';
+                fictionTabs.style.display = 'none';
+            }
         }
     </script>
 </body>
