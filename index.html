@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vidyadhara Library Management System</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Vidyadhara - Complete Library Management System</title>
     <style>
+        /* Core Styles */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+        }
+
+        body {
             font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
         }
 
         .container {
@@ -19,92 +24,41 @@
             padding: 20px;
         }
 
-        .hidden {
-            display: none;
-        }
-
-        /* User Type Selection Page */
-        .user-type-selection {
-            text-align: center;
-            padding: 50px 0;
-        }
-
+        /* Common Components */
         .btn {
-            padding: 12px 24px;
-            margin: 10px;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            background-color: #007bff;
+            color: white;
             transition: background-color 0.3s;
         }
 
-        .btn-primary {
-            background-color: #4CAF50;
-            color: white;
+        .btn:hover {
+            background-color: #0056b3;
         }
 
         .btn-secondary {
-            background-color: #2196F3;
-            color: white;
-        }
-
-        /* Motto Page */
-        .motto-page {
-            text-align: center;
-            padding: 50px 0;
-        }
-
-        .motto {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-
-        /* Auth Page */
-        .auth-page {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
+            background-color: #6c757d;
         }
 
         .form-control {
             width: 100%;
             padding: 10px;
+            margin: 8px 0;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 4px;
         }
 
-        /* Main Page */
+        /* Header and Navigation */
         .top-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            background-color: #fff;
             padding: 15px;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .search-bar {
-            flex-grow: 1;
-            margin: 0 20px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .icon {
-            font-size: 20px;
-            cursor: pointer;
-            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .dropdown {
@@ -115,11 +69,15 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: #f9f9f9;
+            background-color: #fff;
             min-width: 160px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             z-index: 1;
-            border-radius: 5px;
+            border-radius: 4px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
         .dropdown-content a {
@@ -133,253 +91,347 @@
             background-color: #f1f1f1;
         }
 
-        .dropdown:hover .dropdown-content {
-            display: block;
+        /* Auth Forms */
+        .auth-container {
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Motto Section */
+        .motto {
+            text-align: center;
+            padding: 40px 0;
+            background-color: #e9ecef;
+        }
+
+        .motto h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        /* Book Management Forms */
+        .book-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .radio-group {
+            margin: 15px 0;
+        }
+
+        .radio-group label {
+            margin-right: 20px;
         }
 
         /* Tabs */
         .tabs {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
         }
 
         .tab {
-            flex: 1;
-            min-width: 150px;
-            padding: 20px;
-            text-align: center;
-            background-color: #f8f9fa;
-            border-radius: 5px;
+            padding: 15px 25px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
         .tab:hover {
-            background-color: #e9ecef;
+            background-color: #f8f9fa;
         }
 
-        /* Sub-tabs */
-        .sub-tabs {
-            display: none;
-            padding: 10px 20px;
-            background-color: #f1f1f1;
+        .tab.active {
+            background-color: #007bff;
+            color: white;
         }
 
-        .sub-tab {
-            display: inline-block;
-            padding: 8px 16px;
-            margin: 5px;
+        /* Search Bar */
+        .search-bar {
+            padding: 10px;
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            margin: 10px 0;
+        }
+
+        /* User Profile */
+        .profile-section {
             background-color: #fff;
-            border-radius: 3px;
-            cursor: pointer;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
         }
 
-        .sub-tab:hover {
-            background-color: #e9ecef;
-        }
-
-        .show {
-            display: block;
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div id="userTypePage" class="user-type-selection">
-        <h1>Welcome to Vidyadhara Library</h1>
-        <button class="btn btn-primary" onclick="showReaderTypePage()">Reader</button>
-        <button class="btn btn-secondary">Librarian</button>
+    <!-- Initial Selection -->
+    <div id="initialSelection" class="container">
+        <div class="auth-container">
+            <h2>Welcome to Vidyadhara</h2>
+            <button class="btn" onclick="showUserTypeSelection()">Reader</button>
+            <button class="btn" onclick="showLibrarianInterface()">Librarian</button>
+        </div>
     </div>
 
-    <div id="readerTypePage" class="user-type-selection hidden">
-        <h1>Select Reader Type</h1>
-        <button class="btn btn-primary" onclick="showMottoPage('student')">Student</button>
-        <button class="btn btn-secondary" onclick="showMottoPage('expert')">Expert</button>
-        <button class="btn btn-secondary" onclick="showMottoPage('other')">Other</button>
+    <!-- Reader Type Selection -->
+    <div id="readerTypeSelection" class="hidden container">
+        <div class="auth-container">
+            <h2>Select Reader Type</h2>
+            <button class="btn" onclick="showStudentInterface()">Student</button>
+            <button class="btn" onclick="showExpertInterface()">Expert</button>
+            <button class="btn" onclick="showOtherInterface()">Other</button>
+        </div>
     </div>
 
-    <div id="mottoPage" class="motto-page hidden">
-        <h1 id="pageTitle"></h1>
-        <p class="motto">विद्या ददाति विनयम्</p>
-        <p class="motto">Knowledge gives humility</p>
-        <button class="btn btn-primary" onclick="showAuthPage()">Continue</button>
-    </div>
-
-    <div id="authPage" class="auth-page hidden">
-        <div class="form-group">
-            <button class="btn btn-primary" onclick="showLoginForm()">Login</button>
-            <button class="btn btn-secondary" onclick="showSignupForm()">Sign Up</button>
+    <!-- Student Interface -->
+    <div id="studentInterface" class="hidden">
+        <!-- Motto -->
+        <div class="motto">
+            <h1>विद्या ददाति विनयम्</h1>
+            <h2>Knowledge gives humility</h2>
+            <button class="btn" onclick="showStudentAuth()">Continue</button>
         </div>
 
-        <form id="loginForm" class="hidden" onsubmit="handleLogin(event)">
-            <div class="form-group">
-                <input type="email" class="form-control" placeholder="Email" required>
+        <!-- Auth -->
+        <div id="studentAuth" class="hidden">
+            <div class="auth-container">
+                <button class="btn" onclick="showMainStudent('login')">Login</button>
+                <button class="btn" onclick="showSignupForm('student')">Sign Up</button>
             </div>
-            <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+        </div>
 
-        <form id="signupForm" class="hidden" onsubmit="handleSignup(event)">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Name" required>
-            </div>
-            <div class="form-group">
-                <input type="tel" class="form-control" placeholder="Phone Number" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-            <button type="button" class="btn btn-secondary" onclick="signInWithGoogle()">Continue with Gmail</button>
-        </form>
-    </div>
+        <!-- Main Interface -->
+        <div id="mainStudent" class="hidden">
+            <div class="top-bar">
+                <div class="dropdown">
+                    <span class="btn">⚙️ Settings</span>
+                    <div class="dropdown-content">
+                        <a href="#">Language</a>
+                        <a href="#">Notifications</a>
+                        <a href="#">Updates</a>
+                        <a href="#">Privacy</a>
+                    </div>
+                </div>
 
-    <div id="mainPage" class="hidden">
-        <div class="top-bar">
-            <div class="dropdown">
-                <i class="fas fa-cog icon"></i>
-                <div id="settingsDropdown" class="dropdown-content">
-                    <a href="#">Language Preference</a>
-                    <a href="#">Notifications</a>
-                    <a href="#">Updates</a>
-                    <a href="#">About</a>
-                    <a href="#">Privacy</a>
+                <input type="text" class="search-bar" placeholder="Search books, authors, editions...">
+
+                <div class="dropdown">
+                    <span class="btn">👤 Profile</span>
+                    <div class="dropdown-content">
+                        <a href="#">History</a>
+                        <a href="#">Saved</a>
+                        <a href="#">Account</a>
+                        <a href="#">Help</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="Search books by title, author, year, or edition...">
+            <div class="container">
+                <div class="tabs">
+                    <div class="tab">Engineering</div>
+                    <div class="tab">Medicine</div>
+                    <div class="tab">Law</div>
+                    <div class="tab">Accountancy</div>
+                    <div class="tab">Literature</div>
+                </div>
             </div>
+        </div>
+    </div>
 
-            <div class="dropdown">
-                <i class="fas fa-user icon"></i>
-                <div class="dropdown-content">
-                    <a href="#">Search History</a>
-                    <a href="#">Saved Books</a>
-                    <a href="#">Collections</a>
-                    <a href="#">Manage Account</a>
-                    <a href="#">Help</a>
+    <!-- Expert Interface -->
+    <div id="expertInterface" class="hidden">
+        <!-- Similar structure to Student Interface with additional features -->
+        <div class="motto">
+            <h1>विद्या ददाति विनयम्</h1>
+            <h2>Knowledge gives humility</h2>
+            <button class="btn" onclick="showExpertAuth()">Continue</button>
+        </div>
+
+        <div id="expertAuth" class="hidden">
+            <div class="auth-container">
+                <button class="btn" onclick="showMainExpert('login')">Login</button>
+                <button class="btn" onclick="showSignupForm('expert')">Sign Up</button>
+            </div>
+        </div>
+
+        <!-- Main Expert Interface -->
+        <div id="mainExpert" class="hidden">
+            <!-- Similar to Student interface with additional features -->
+        </div>
+    </div>
+
+    <!-- Librarian Interface -->
+    <div id="librarianInterface" class="hidden">
+        <div class="auth-container">
+            <button class="btn" onclick="showLibrarianAuth('login')">Login</button>
+            <button class="btn" onclick="showLibrarianTypeSelection()">Sign Up</button>
+        </div>
+
+        <!-- Library Type Selection -->
+        <div id="libraryTypeSelection" class="hidden container">
+            <div class="auth-container">
+                <h2>Select Library Type</h2>
+                <button class="btn" onclick="showPublicLibraryForm()">Public Library</button>
+                <button class="btn" onclick="showCollegeLibraryForm()">College Library</button>
+            </div>
+        </div>
+
+        <!-- Public Library Form -->
+        <div id="publicLibraryForm" class="hidden">
+            <div class="container">
+                <div class="book-form">
+                    <h2>Public Library Registration</h2>
+                    <form id="publicLibraryBookForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Book Title" required>
+                            <input type="text" class="form-control" placeholder="Author" required>
+                            <input type="text" class="form-control" placeholder="Edition">
+                            <input type="number" class="form-control" placeholder="Year of Publishing" required>
+                            
+                            <div class="radio-group">
+                                <label>
+                                    <input type="radio" name="bookStatus" value="available" required> Available
+                                </label>
+                                <label>
+                                    <input type="radio" name="bookStatus" value="taken"> Taken
+                                </label>
+                            </div>
+
+                            <input type="text" class="form-control" placeholder="Library Location" required>
+                        </div>
+                        
+                        <button type="button" class="btn" onclick="addAnotherBook('public')">Add Another Book</button>
+                        <button type="submit" class="btn">Save and Continue</button>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <div id="tabsContainer" class="tabs">
-            <!-- Tabs will be dynamically inserted here -->
-        </div>
+        <!-- College Library Form -->
+        <div id="collegeLibraryForm" class="hidden">
+            <div class="container">
+                <div class="book-form">
+                    <h2>College Library Registration</h2>
+                    <form id="collegeLibraryForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="College Name" required>
+                            <input type="text" class="form-control" placeholder="District" required>
+                            <input type="text" class="form-control" placeholder="Librarian's Name" required>
+                            <input type="tel" class="form-control" placeholder="Phone Number" required>
+                        </div>
 
-        <div id="subTabsContainer" class="sub-tabs">
-            <!-- Sub-tabs will be dynamically inserted here -->
+                        <div class="form-group">
+                            <h3>Book Details</h3>
+                            <input type="text" class="form-control" placeholder="Book Title" required>
+                            <input type="text" class="form-control" placeholder="Author" required>
+                            <input type="text" class="form-control" placeholder="Edition">
+                            <input type="number" class="form-control" placeholder="Year of Publishing" required>
+                            
+                            <div class="radio-group">
+                                <label>
+                                    <input type="radio" name="collegeBookStatus" value="available" required> Available
+                                </label>
+                                <label>
+                                    <input type="radio" name="collegeBookStatus" value="taken"> Taken
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn" onclick="addAnotherBook('college')">Add Another Book</button>
+                        <button type="submit" class="btn">Save and Continue</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        let currentUserType = '';
-        
-        const userTabs = {
-            student: [
-                { icon: 'fas fa-cogs', text: 'Engineering' },
-                { icon: 'fas fa-heartbeat', text: 'Medicine' },
-                { icon: 'fas fa-balance-scale', text: 'Law' },
-                { icon: 'fas fa-calculator', text: 'Accountancy' },
-                { icon: 'fas fa-book', text: 'Literature' }
-            ],
-            expert: [
-                { icon: 'fas fa-cogs', text: 'Engineering' },
-                { icon: 'fas fa-heartbeat', text: 'Medicine' },
-                { icon: 'fas fa-balance-scale', text: 'Law' },
-                { icon: 'fas fa-calculator', text: 'Accountancy' },
-                { icon: 'fas fa-book', text: 'Literature' }
-            ],
-            other: [
-                { icon: 'fas fa-book', text: 'Fiction', subtabs: ['Romance', 'Mystery', 'Thriller', 'Horror', 'Historical Fantasy', 'Science Fiction', 'Dystopian', 'Utopian'] },
-                { icon: 'fas fa-glasses', text: 'Non Fiction', subtabs: ['Biography', 'Autobiography', 'Memoir', 'History', 'Self Help', 'Travel', 'Cook Book', 'Science', 'Philosophy'] },
-                { icon: 'fas fa-paint-brush', text: 'Graphic Novels' },
-                { icon: 'fas fa-feather', text: 'Poetry' },
-                { icon: 'fas fa-theater-masks', text: 'Playscripts' }
-            ]
-        };
-
-        function showReaderTypePage() {
-            document.getElementById('userTypePage').classList.add('hidden');
-            document.getElementById('readerTypePage').classList.remove('hidden');
+        // Navigation Functions
+        function showUserTypeSelection() {
+            document.getElementById('initialSelection').classList.add('hidden');
+            document.getElementById('readerTypeSelection').classList.remove('hidden');
         }
 
-        function showMottoPage(type) {
-            currentUserType = type;
-            document.getElementById('readerTypePage').classList.add('hidden');
-            document.getElementById('mottoPage').classList.remove('hidden');
-            document.getElementById('pageTitle').textContent = `${type.charAt(0).toUpperCase() + type.slice(1)}'s Page`;
+        function showStudentInterface() {
+            document.getElementById('readerTypeSelection').classList.add('hidden');
+            document.getElementById('studentInterface').classList.remove('hidden');
         }
 
-        function showAuthPage() {
-            document.getElementById('mottoPage').classList.add('hidden');
-            document.getElementById('authPage').classList.remove('hidden');
+        function showExpertInterface() {
+            document.getElementById('readerTypeSelection').classList.add('hidden');
+            document.getElementById('expertInterface').classList.remove('hidden');
         }
 
-        function showLoginForm() {
-            document.getElementById('loginForm').classList.remove('hidden');
-            document.getElementById('signupForm').classList.add('hidden');
+        function showLibrarianInterface() {
+            document.getElementById('initialSelection').classList.add('hidden');
+            document.getElementById('librarianInterface').classList.remove('hidden');
         }
 
-        function showSignupForm() {
-            document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('signupForm').classList.remove('hidden');
+        function showLibrarianTypeSelection() {
+            document.getElementById('librarianInterface').querySelector('.auth-container').classList.add('hidden');
+            document.getElementById('libraryTypeSelection').classList.remove('hidden');
         }
 
-        function handleLogin(event) {
-            event.preventDefault();
-            showMainPage();
+        function showPublicLibraryForm() {
+            document.getElementById('libraryTypeSelection').classList.add('hidden');
+            document.getElementById('publicLibraryForm').classList.remove('hidden');
         }
 
-        function handleSignup(event) {
-            event.preventDefault();
-            showMainPage();
+        function showCollegeLibraryForm() {
+            document.getElementById('libraryTypeSelection').classList.add('hidden');
+            document.getElementById('collegeLibraryForm').classList.remove('hidden');
         }
 
-        function signInWithGoogle() {
-            // Google sign-in implementation would go here
-            showMainPage();
+        // Form Handling
+        function addAnotherBook(type) {
+            const form = document.getElementById(`${type}LibraryBookForm`);
+            // Clone the book details section and append it
+            const bookDetails = form.querySelector('.form-group').cloneNode(true);
+            form.insertBefore(bookDetails, form.lastElementChild);
+            // Clear the new form fields
+            bookDetails.querySelectorAll('input').forEach(input => input.value = '');
         }
 
-        function showMainPage() {
-            document.getElementById('authPage').classList.add('hidden');
-            document.getElementById('mainPage').classList.remove('hidden');
-            
-            // Update settings dropdown for expert users
-            if (currentUserType === 'expert') {
-                const settingsDropdown = document.getElementById('settingsDropdown');
-                settingsDropdown.innerHTML += '<a href="#">Suggestions</a>';
-            }
-            
-            // Create tabs based on user type
-            const tabsContainer = document.getElementById('tabsContainer');
-            tabsContainer.innerHTML = '';
-            
-            userTabs[currentUserType].forEach((tab, index) => {
-                const tabDiv = document.createElement('div');
-                tabDiv.className = 'tab';
-                tabDiv.onclick = () => handleTabClick(index);
-                tabDiv.innerHTML = `
-                    <i class="${tab.icon}"></i>
-                    <p>${tab.text}</p>
-                `;
-                tabsContainer.appendChild(tabDiv);
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add form submission handlers
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // Here you would typically send the data to a server
+                    alert('Form submitted successfully!');
+                });
             });
-        }
 
-        function handleTabClick(index) {
-            const tab = userTabs[currentUserType][index];
-            const subTabsContainer = document.getElementById('subTabsContainer');
-            
-            if (tab.subtabs) {
-                subTabsContainer.innerHTML = tab.subtabs.map(subtab => 
-                    `<div class="sub-tab">${subtab}</div>`
-                ).join('');
-                subTabsContainer.classList.add('show');
-            } else {
-                subTabsContainer.classList.remove('show');
-            }
-        }
+            // Add tab functionality
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
     </script>
 </body>
 </html>
