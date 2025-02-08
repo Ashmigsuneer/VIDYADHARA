@@ -6,44 +6,192 @@
     <title>Vidyadhara Library Management System</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* Previous styles remain the same */
-
-        /* Adding styles for nested tabs */
-        .nested-tabs {
-            display: none;
-            padding: 20px;
-            background-color: #f1f1f1;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
-        .nested-tab {
-            padding: 10px 20px;
-            margin: 5px;
-            background-color: #fff;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* User Type Selection Page */
+        .user-type-selection {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            margin: 10px;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        /* Motto Page */
+        .motto-page {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .motto {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        /* Auth Page */
+        .auth-page {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Main Page */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .icon {
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .dropdown {
+            position: relative;
             display: inline-block;
         }
 
-        .nested-tab:hover {
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 150px;
+            padding: 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .tab:hover {
             background-color: #e9ecef;
         }
 
-        .active-tab {
+        /* Sub-tabs */
+        .sub-tabs {
+            display: none;
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+        }
+
+        .sub-tab {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 5px;
+            background-color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .sub-tab:hover {
             background-color: #e9ecef;
         }
 
-        /* Remaining previous styles stay the same */
+        .show {
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <!-- User Type Selection Page -->
     <div id="userTypePage" class="user-type-selection">
         <h1>Welcome to Vidyadhara Library</h1>
         <button class="btn btn-primary" onclick="showReaderTypePage()">Reader</button>
         <button class="btn btn-secondary">Librarian</button>
     </div>
 
-    <!-- Reader Type Selection Page -->
     <div id="readerTypePage" class="user-type-selection hidden">
         <h1>Select Reader Type</h1>
         <button class="btn btn-primary" onclick="showMottoPage('student')">Student</button>
@@ -51,23 +199,19 @@
         <button class="btn btn-secondary" onclick="showMottoPage('other')">Other</button>
     </div>
 
-    <!-- Motto Page (Dynamic for all user types) -->
     <div id="mottoPage" class="motto-page hidden">
-        <h1 id="userTypeTitle">User's Page</h1>
+        <h1 id="pageTitle"></h1>
         <p class="motto">विद्या ददाति विनयम्</p>
         <p class="motto">Knowledge gives humility</p>
         <button class="btn btn-primary" onclick="showAuthPage()">Continue</button>
     </div>
 
-    <!-- Auth Page -->
     <div id="authPage" class="auth-page hidden">
-        <h1>Authentication</h1>
         <div class="form-group">
             <button class="btn btn-primary" onclick="showLoginForm()">Login</button>
             <button class="btn btn-secondary" onclick="showSignupForm()">Sign Up</button>
         </div>
-        
-        <!-- Login Form -->
+
         <form id="loginForm" class="hidden" onsubmit="handleLogin(event)">
             <div class="form-group">
                 <input type="email" class="form-control" placeholder="Email" required>
@@ -78,7 +222,6 @@
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
 
-        <!-- Signup Form -->
         <form id="signupForm" class="hidden" onsubmit="handleSignup(event)">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Name" required>
@@ -86,21 +229,16 @@
             <div class="form-group">
                 <input type="tel" class="form-control" placeholder="Phone Number" required>
             </div>
-            <div class="form-group">
-                <input type="email" class="form-control" placeholder="Email" required>
-            </div>
             <button type="submit" class="btn btn-primary">Sign Up</button>
-            <button type="button" class="btn btn-secondary" onclick="signupWithGoogle()">Continue with Google</button>
+            <button type="button" class="btn btn-secondary" onclick="signInWithGoogle()">Continue with Gmail</button>
         </form>
     </div>
 
-    <!-- Main Pages -->
-    <!-- Student Main Page -->
-    <div id="studentMainPage" class="hidden">
+    <div id="mainPage" class="hidden">
         <div class="top-bar">
             <div class="dropdown">
                 <i class="fas fa-cog icon"></i>
-                <div class="dropdown-content">
+                <div id="settingsDropdown" class="dropdown-content">
                     <a href="#">Language Preference</a>
                     <a href="#">Notifications</a>
                     <a href="#">Updates</a>
@@ -125,177 +263,52 @@
             </div>
         </div>
 
-        <div class="tabs">
-            <div class="tab">
-                <i class="fas fa-cogs"></i>
-                <p>Engineering</p>
-            </div>
-            <div class="tab">
-                <i class="fas fa-heart"></i>
-                <p>Medicine</p>
-            </div>
-            <div class="tab">
-                <i class="fas fa-balance-scale"></i>
-                <p>Law</p>
-            </div>
-            <div class="tab">
-                <i class="fas fa-calculator"></i>
-                <p>Accountancy</p>
-            </div>
-            <div class="tab">
-                <i class="fas fa-book"></i>
-                <p>Literature</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Expert Main Page -->
-    <div id="expertMainPage" class="hidden">
-        <div class="top-bar">
-            <div class="dropdown">
-                <i class="fas fa-cog icon"></i>
-                <div class="dropdown-content">
-                    <a href="#">Language Preference</a>
-                    <a href="#">Notifications</a>
-                    <a href="#">Updates</a>
-                    <a href="#">About</a>
-                    <a href="#">Privacy</a>
-                    <a href="#">Suggestions</a>
-                </div>
-            </div>
-
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="Search books by title, author, year, or edition...">
-            </div>
-
-            <div class="dropdown">
-                <i class="fas fa-user icon"></i>
-                <div class="dropdown-content">
-                    <a href="#">Search History</a>
-                    <a href="#">Saved Books</a>
-                    <a href="#">Collections</a>
-                    <a href="#">Manage Account</a>
-                    <a href="#">Help</a>
-                </div>
-            </div>
+        <div id="tabsContainer" class="tabs">
+            <!-- Tabs will be dynamically inserted here -->
         </div>
 
-        <div class="tabs">
-            <div class="tab">
-                <i class="fas fa-cogs"></i>
-                <p>Engineering</p>
-            </div>
-            <div class="tab">
-                <i class="fas fa-heart"></i>
-                <p>Medicine</p>
-            </div>
-            <div class="tab">
-                <i class="fas fa-balance-scale"></i>
-                <p>Law</p>
-            </div>
-            <div class="tab">
-                <i class="fas fa-calculator"></i>
-                <p>Accountancy</p>
-            </div>
-            <div class="tab">
-                <i class="fas fa-book"></i>
-                <p>Literature</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Other Main Page -->
-    <div id="otherMainPage" class="hidden">
-        <div class="top-bar">
-            <div class="dropdown">
-                <i class="fas fa-cog icon"></i>
-                <div class="dropdown-content">
-                    <a href="#">Language Preference</a>
-                    <a href="#">Notifications</a>
-                    <a href="#">Updates</a>
-                    <a href="#">About</a>
-                    <a href="#">Privacy</a>
-                </div>
-            </div>
-
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="Search books by title, author, year, or edition...">
-            </div>
-
-            <div class="dropdown">
-                <i class="fas fa-user icon"></i>
-                <div class="dropdown-content">
-                    <a href="#">Search History</a>
-                    <a href="#">Saved Books</a>
-                    <a href="#">Collections</a>
-                    <a href="#">Manage Account</a>
-                    <a href="#">Help</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="tabs">
-            <div class="tab" onclick="toggleNestedTabs('fiction')">
-                <i class="fas fa-book-reader"></i>
-                <p>Fiction</p>
-            </div>
-            <div class="tab" onclick="toggleNestedTabs('nonfiction')">
-                <i class="fas fa-glasses"></i>
-                <p>Non Fiction</p>
-            </div>
-            <div class="tab">
-                <i class="fas fa-paint-brush"></i>
-                <p>Graphic Novels</p>
-            </div>
-            <div class="tab">
-                <i class="fas fa-feather"></i>
-                <p>Poetry</p>
-            </div>
-            <div class="tab">
-                <i class="fas fa-theater-masks"></i>
-                <p>Playscripts</p>
-            </div>
-        </div>
-
-        <!-- Nested Tabs -->
-        <div id="fictionTabs" class="nested-tabs">
-            <div class="nested-tab">Romance</div>
-            <div class="nested-tab">Mystery</div>
-            <div class="nested-tab">Thriller</div>
-            <div class="nested-tab">Horror</div>
-            <div class="nested-tab">Historical Fantasy</div>
-            <div class="nested-tab">Science Fiction</div>
-            <div class="nested-tab">Dystopian</div>
-            <div class="nested-tab">Utopian</div>
-        </div>
-
-        <div id="nonfictionTabs" class="nested-tabs">
-            <div class="nested-tab">Biography</div>
-            <div class="nested-tab">Autobiography</div>
-            <div class="nested-tab">Memoir</div>
-            <div class="nested-tab">History</div>
-            <div class="nested-tab">Self Help</div>
-            <div class="nested-tab">Travel</div>
-            <div class="nested-tab">Cook Book</div>
-            <div class="nested-tab">Science</div>
-            <div class="nested-tab">Philosophy</div>
+        <div id="subTabsContainer" class="sub-tabs">
+            <!-- Sub-tabs will be dynamically inserted here -->
         </div>
     </div>
 
     <script>
         let currentUserType = '';
+        
+        const userTabs = {
+            student: [
+                { icon: 'fas fa-cogs', text: 'Engineering' },
+                { icon: 'fas fa-heartbeat', text: 'Medicine' },
+                { icon: 'fas fa-balance-scale', text: 'Law' },
+                { icon: 'fas fa-calculator', text: 'Accountancy' },
+                { icon: 'fas fa-book', text: 'Literature' }
+            ],
+            expert: [
+                { icon: 'fas fa-cogs', text: 'Engineering' },
+                { icon: 'fas fa-heartbeat', text: 'Medicine' },
+                { icon: 'fas fa-balance-scale', text: 'Law' },
+                { icon: 'fas fa-calculator', text: 'Accountancy' },
+                { icon: 'fas fa-book', text: 'Literature' }
+            ],
+            other: [
+                { icon: 'fas fa-book', text: 'Fiction', subtabs: ['Romance', 'Mystery', 'Thriller', 'Horror', 'Historical Fantasy', 'Science Fiction', 'Dystopian', 'Utopian'] },
+                { icon: 'fas fa-glasses', text: 'Non Fiction', subtabs: ['Biography', 'Autobiography', 'Memoir', 'History', 'Self Help', 'Travel', 'Cook Book', 'Science', 'Philosophy'] },
+                { icon: 'fas fa-paint-brush', text: 'Graphic Novels' },
+                { icon: 'fas fa-feather', text: 'Poetry' },
+                { icon: 'fas fa-theater-masks', text: 'Playscripts' }
+            ]
+        };
 
         function showReaderTypePage() {
             document.getElementById('userTypePage').classList.add('hidden');
             document.getElementById('readerTypePage').classList.remove('hidden');
         }
 
-        function showMottoPage(userType) {
-            currentUserType = userType;
+        function showMottoPage(type) {
+            currentUserType = type;
             document.getElementById('readerTypePage').classList.add('hidden');
             document.getElementById('mottoPage').classList.remove('hidden');
-            document.getElementById('userTypeTitle').textContent = 
-                userType.charAt(0).toUpperCase() + userType.slice(1) + "'s Page";
+            document.getElementById('pageTitle').textContent = `${type.charAt(0).toUpperCase() + type.slice(1)}'s Page`;
         }
 
         function showAuthPage() {
@@ -315,42 +328,56 @@
 
         function handleLogin(event) {
             event.preventDefault();
-            document.getElementById('authPage').classList.add('hidden');
             showMainPage();
         }
 
         function handleSignup(event) {
             event.preventDefault();
-            document.getElementById('authPage').classList.add('hidden');
             showMainPage();
         }
 
-        function showMainPage() {
-            const mainPages = {
-                'student': 'studentMainPage',
-                'expert': 'expertMainPage',
-                'other': 'otherMainPage'
-            };
-            document.getElementById(mainPages[currentUserType]).classList.remove('hidden');
-        }
-
-        function signupWithGoogle() {
+        function signInWithGoogle() {
             // Google sign-in implementation would go here
             showMainPage();
         }
 
-        function toggleNestedTabs(tabType) {
-            const fictionTabs = document.getElementById('fictionTabs');
-            const nonfictionTabs = document.getElementById('nonfictionTabs');
+        function showMainPage() {
+            document.getElementById('authPage').classList.add('hidden');
+            document.getElementById('mainPage').classList.remove('hidden');
             
-            if (tabType === 'fiction') {
-                fictionTabs.style.display = 
-                    fictionTabs.style.display === 'block' ? 'none' : 'block';
-                nonfictionTabs.style.display = 'none';
+            // Update settings dropdown for expert users
+            if (currentUserType === 'expert') {
+                const settingsDropdown = document.getElementById('settingsDropdown');
+                settingsDropdown.innerHTML += '<a href="#">Suggestions</a>';
+            }
+            
+            // Create tabs based on user type
+            const tabsContainer = document.getElementById('tabsContainer');
+            tabsContainer.innerHTML = '';
+            
+            userTabs[currentUserType].forEach((tab, index) => {
+                const tabDiv = document.createElement('div');
+                tabDiv.className = 'tab';
+                tabDiv.onclick = () => handleTabClick(index);
+                tabDiv.innerHTML = `
+                    <i class="${tab.icon}"></i>
+                    <p>${tab.text}</p>
+                `;
+                tabsContainer.appendChild(tabDiv);
+            });
+        }
+
+        function handleTabClick(index) {
+            const tab = userTabs[currentUserType][index];
+            const subTabsContainer = document.getElementById('subTabsContainer');
+            
+            if (tab.subtabs) {
+                subTabsContainer.innerHTML = tab.subtabs.map(subtab => 
+                    `<div class="sub-tab">${subtab}</div>`
+                ).join('');
+                subTabsContainer.classList.add('show');
             } else {
-                nonfictionTabs.style.display = 
-                    nonfictionTabs.style.display === 'block' ? 'none' : 'block';
-                fictionTabs.style.display = 'none';
+                subTabsContainer.classList.remove('show');
             }
         }
     </script>
