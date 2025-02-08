@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Previous head section remains the same -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidyadhara - Library Management System</title>
+    <style>
+        /* Previous styles remain the same */
+        
+        /* Additional styles for librarian interface */
+        .library-type-selection {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .book-form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .book-form input,
+        .book-form select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .radio-group {
+            margin: 10px 0;
+        }
+
+        .radio-group label {
+            margin-right: 20px;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .college-form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Previous code remains the same until librarian interface -->
+
+    <!-- Librarian Interface -->
+    <div id="librarianInterface" class="hidden">
+        <!-- Authentication Page -->
+        <div id="librarianAuthPage" class="container">
+            <div class="auth-options">
+                <button class="auth-button" onclick="showLoginForm('librarian')">Login</button>
+                <button class="auth-button" onclick="showLibraryTypeSelection()">Sign Up</button>
+            </div>
+        </div>
+
+        <!-- Library Type Selection -->
+        <div id="libraryTypeSelection" class="container hidden">
+            <div class="library-type-selection">
+                <button class="auth-button" onclick="showPublicLibraryForm()">Public Library</button>
+                <button class="auth-button" onclick="showCollegeLibraryForm()">College Library</button>
+            </div>
+        </div>
+
+        <!-- Public Library Registration -->
+        <div id="publicLibraryForm" class="container hidden">
+            <h2>Public Library Registration</h2>
+            <div class="book-form">
+                <h3>Enter Book Details</h3>
+                <input type="text" placeholder="Book Title" required>
+                <input type="text" placeholder="Author" required>
+                <input type="text" placeholder="Edition" required>
+                <input type="number" placeholder="Year of Publishing" required>
+                
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="bookStatus" value="available" checked>
+                        Available
+                    </label>
+                    <label>
+                        <input type="radio" name="bookStatus" value="taken">
+                        Taken by Reader
+                    </label>
+                </div>
+
+                <input type="text" placeholder="Library Location" required>
+
+                <div class="form-buttons">
+                    <button class="auth-button" onclick="addAnotherBook('public')">Add Another Book</button>
+                    <button class="auth-button" onclick="saveAndContinue('public')">Save & Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- College Library Registration -->
+        <div id="collegeLibraryForm" class="container hidden">
+            <h2>College Library Registration</h2>
+            <div class="college-form">
+                <h3>College Details</h3>
+                <input type="text" placeholder="College Name" required>
+                <input type="text" placeholder="District" required>
+                <input type="text" placeholder="Librarian's Name" required>
+                <input type="tel" placeholder="Phone Number" required>
+            </div>
+
+            <div class="book-form">
+                <h3>Enter Book Details</h3>
+                <input type="text" placeholder="Book Title" required>
+                <input type="text" placeholder="Author" required>
+                <input type="text" placeholder="Edition" required>
+                <input type="number" placeholder="Year of Publishing" required>
+                
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="collegeBookStatus" value="available" checked>
+                        Available
+                    </label>
+                    <label>
+                        <input type="radio" name="collegeBookStatus" value="taken">
+                        Taken by Reader
+                    </label>
+                </div>
+
+                <div class="form-buttons">
+                    <button class="auth-button" onclick="addAnotherBook('college')">Add Another Book</button>
+                    <button class="auth-button" onclick="saveAndContinue('college')">Save & Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Librarian Page (after registration/login) -->
+        <div id="mainLibrarianPage" class="hidden">
+            <div class="top-bar">
+                <div class="settings-icon">
+                    ⚙️
+                    <div class="dropdown-content">
+                        <a href="#">Edit Library Details</a>
+                        <a href="#">Manage Books</a>
+                        <a href="#">Settings</a>
+                        <a href="#">Help</a>
+                    </div>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search books or readers...">
+                </div>
+                <div class="profile-icon">
+                    👤
+                    <div class="dropdown-content">
+                        <a href="#">Profile</a>
+                        <a href="#">Library Statistics</a>
+                        <a href="#">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Previous JavaScript functions remain the same
+
+        function showLibrarianInterface() {
+            document.getElementById('userTypeSelection').classList.add('hidden');
+            document.getElementById('librarianInterface').classList.remove('hidden');
+            document.getElementById('librarianAuthPage').classList.remove('hidden');
+        }
+
+        function showLibraryTypeSelection() {
+            document.getElementById('librarianAuthPage').classList.add('hidden');
+            document.getElementById('libraryTypeSelection').classList.remove('hidden');
+        }
+
+        function showPublicLibraryForm() {
+            document.getElementById('libraryTypeSelection').classList.add('hidden');
+            document.getElementById('publicLibraryForm').classList.remove('hidden');
+        }
+
+        function showCollegeLibraryForm() {
+            document.getElementById('libraryTypeSelection').classList.add('hidden');
+            document.getElementById('collegeLibraryForm').classList.remove('hidden');
+        }
+
+        function addAnotherBook(type) {
+            // Reset the form fields but keep the form visible
+            const form = type === 'public' ? 
+                document.querySelector('#publicLibraryForm .book-form') :
+                document.querySelector('#collegeLibraryForm .book-form');
+            form.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
+                input.value = '';
+            });
+        }
+
+        function saveAndContinue(type) {
+            // Hide the registration forms and show main librarian page
+            document.getElementById(`${type}LibraryForm`).classList.add('hidden');
+            document.getElementById('mainLibrarianPage').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
